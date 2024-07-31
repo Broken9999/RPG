@@ -86,15 +86,16 @@ antagonists = [
     }
 ]
 
-# Initial islands with villages and temples
 islands = [
+    {"name": "Forest", "description": "A land filled with magical creatures and mysterious temples.", "level_requirement": 1, "has_village": True, "has_temple": True},
+    {"name": "Dungen", "description": "A hole in a cave with monsters all over it that rose to the top.", "level_requirement": 20, "has_village": True, "has_temple": True},
     {"name": "Mystic Island", "description": "A land filled with magical creatures and mysterious temples.", "level_requirement": 1, "has_village": True, "has_temple": True},
     {"name": "Frost Island", "description": "An icy landscape inhabited by frost giants, with an ancient temple.", "level_requirement": 5, "has_village": True, "has_temple": True},
     {"name": "Volcano Island", "description": "A fiery terrain with lava pits and a temple of the Fire God.", "level_requirement": 10, "has_village": False, "has_temple": True},
     {"name": "Shadow Island", "description": "A dark and eerie place, rumored to be the lair of Lord Nox.", "level_requirement": 15, "has_village": False, "has_temple": False}
 ]
 
-for i in range(4, 103):
+for i in range(6, 103):
     islands.append({
         "name": f"Island {i}",
         "description": f"A mysterious island filled with adventures and dangers. Explore at your own risk.",
@@ -218,6 +219,8 @@ def login():
     global username, password
     username = input("Enter your username: ")
     password = input("Enter your password: ")
+
+
 
 def level_up():
     global stats
@@ -351,9 +354,14 @@ def use_potions():
 def choose_area():
     global current_area
     print("\nWhere do you want to go?")
+    
+    
+    
     for i, island in enumerate(islands, 1):
         if stats['level'] >= island["level_requirement"]:
-            print(f"{i}. {island['name']} - {island['description']}")
+            print(f"Your new island is {i}. {island['name']} - {island['description']}")
+    for j in island:
+        print(j)
     area_choice = input("Enter the number of your choice: ")
     
     try:
@@ -400,6 +408,21 @@ def explore_village():
 
 def explore_forest():
     print("\nYou have entered the forest.")
+    while True:
+        encounter_monster(horde=random.choice([True, False]))
+        action = input("Do you want to continue exploring or return to the village? (continue/return): ").lower()
+        if action == "return":
+            print("Returning to the village.")
+            break
+        elif action == "continue":
+            if random.choice([True, False]):
+                print("A horde of monsters appears!")
+                encounter_monster(horde=True)
+        else:
+            print("Invalid choice. Please choose 'continue' or 'return'.")
+
+def explore_islands():
+    print("\nYou have entered a island.")
     while True:
         encounter_monster(horde=random.choice([True, False]))
         action = input("Do you want to continue exploring or return to the village? (continue/return): ").lower()
@@ -643,6 +666,8 @@ def main_game_loop():
                 explore_forest()
             elif current_area == "Village":
                 explore_village()
+            else:
+                explore_islands()
         elif choice == "2":
             shop()
         elif choice == "3":
