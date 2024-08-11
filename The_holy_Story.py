@@ -28,7 +28,7 @@ all_mobs = {
     "Djinn of Shadows": {"health": 80, "damage": 18, "element": "Darkness"},
     "Kraken of the Depths": {"health": 200, "damage": 35, "element": "Darkness"},
     "Wraith of the Night": {"health": 70, "damage": 15, "element": "Darkness"},
-    "Behemoth of the Earth": {"health": 250, "damage": 35, "element": "Earth"},
+    "Behemoth of the Earth": {"health": 250, "damage": 35, "element": "Earth"},#"Behemoth of Earth Jimmy": {"health": 850, "damage": 100000000000000000000000, "element": "Fat"},
     "Cyclops of the Mountains": {"health": 120, "damage": 22, "element": "Earth"},
     "Wyvern of the Skies": {"health": 140, "damage": 28, "element": "Air"},
     "Naga of the Seas": {"health": 110, "damage": 20, "element": "Water"},
