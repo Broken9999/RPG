@@ -28,7 +28,7 @@ all_mobs = {
     "Djinn of Shadows": {"health": 80, "damage": 18, "element": "Darkness"},
     "Kraken of the Depths": {"health": 200, "damage": 35, "element": "Darkness"},
     "Wraith of the Night": {"health": 70, "damage": 15, "element": "Darkness"},
-    "Behemoth of the Earth": {"health": 250, "damage": 35, "element": "Earth"},#"Behemoth of Earth Jimmy": {"health": 850, "damage": 100000000000000000000000, "element": "Fat"},
+    "Behemoth of the Earth": {"health": 250, "damage": 35, "element": "Earth"},
     "Cyclops of the Mountains": {"health": 120, "damage": 22, "element": "Earth"},
     "Wyvern of the Skies": {"health": 140, "damage": 28, "element": "Air"},
     "Naga of the Seas": {"health": 110, "damage": 20, "element": "Water"},
@@ -88,11 +88,11 @@ antagonists = [
 
 islands = [
     {"name": "Forest", "description": "A land filled with magical creatures and mysterious temples.", "level_requirement": 1, "has_village": True, "has_temple": True},
-    {"name": "Dungen", "description": "A hole in a cave with monsters all over it that rose to the top.", "level_requirement": 20, "has_village": True, "has_temple": True},
     {"name": "Mystic Island", "description": "A land filled with magical creatures and mysterious temples.", "level_requirement": 1, "has_village": True, "has_temple": True},
     {"name": "Frost Island", "description": "An icy landscape inhabited by frost giants, with an ancient temple.", "level_requirement": 5, "has_village": True, "has_temple": True},
     {"name": "Volcano Island", "description": "A fiery terrain with lava pits and a temple of the Fire God.", "level_requirement": 10, "has_village": False, "has_temple": True},
-    {"name": "Shadow Island", "description": "A dark and eerie place, rumored to be the lair of Lord Nox.", "level_requirement": 15, "has_village": False, "has_temple": False}
+    {"name": "Shadow Island", "description": "A dark and eerie place, rumored to be the lair of Lord Nox.", "level_requirement": 15, "has_village": False, "has_temple": False},
+    {"name": "Dungen", "description": "A hole in a cave with monsters all over it that rose to the top.", "level_requirement": 20, "has_village": True, "has_temple": True}
 ]
 
 for i in range(6, 103):
@@ -183,8 +183,7 @@ armor_shop = {"Leather Armor": 50, "Iron Armor": 80, "Steel Armor": 100}
 player_class = None
 player_subclass = None
 items = []
-coins = 100
-#dic_coins={"coins":100}
+coins = 230
 current_area = "Village"
 stats = {"level": 1, "xp": 0, "health": 100, "mana": 50, "damage": 10, "element": random.choice(elements)}
 inventory = {"weapons": [], "potions": [], "others": []}
@@ -500,7 +499,7 @@ def shop():
                 inventory["others"].append(armor_choice)
                 print(f"You bought {armor_choice}.")
             else:
-                print("Not enough coins.")
+                print("Not enough coins.")  
     elif choice == "4":
         sell_items()
     elif choice == "5":
@@ -523,7 +522,7 @@ def sell_items():
         item_choice = int(input("Enter the number of the weapon you want to sell: ")) - 1
         if 0 <= item_choice < len(inventory["weapons"]):
             item_name = inventory["weapons"].pop(item_choice)
-            item_value = random.randint(10, 50)  # Value of weapon
+            item_value = random.randint(10, 50)
             coins += item_value
             print(f"You sold {item_name} for {item_value} coins.")
         else:
@@ -535,7 +534,7 @@ def sell_items():
         item_choice = int(input("Enter the number of the potion you want to sell: ")) - 1
         if 0 <= item_choice < len(inventory["potions"]):
             item_name = inventory["potions"].pop(item_choice)
-            item_value = potions[item_name] // 2  # Sell for half the purchase price
+            item_value = potions[item_name] // 2
             coins += item_value
             print(f"You sold {item_name} for {item_value} coins.")
         else:
@@ -627,7 +626,7 @@ def hidden_quest():
         "Retrieve the lost artifact from the abandoned temple.",
         "Defeat the rogue wizard terrorizing the nearby village.",
         "Rescue the captured merchant from the bandit camp.",
-        "Find the rare herb needed to cure the plague."
+        "Find the rare herb needed to cure the plague.",
     ]
     selected_quest = random.choice(quests)
     print(f"Quest: {selected_quest}")
