@@ -247,16 +247,6 @@ def choose_class():
         player_class = "Warrior"
     print(f"You are now a {player_class}!")
 
-def class_ability():
-    if player_class == "Warrior":
-        print("1. Shield Bash\n2. Power Strike\n3. Battle Cry")
-    elif player_class == "Archer":
-        print("1. Arrow Rain\n2. Eagle Eye\n3. Snare Trap")
-    elif player_class == "Mage":
-        print("1. Fireball\n2. Ice Shield\n3. Lightning Bolt")
-    choice = input("Choose an ability: ")
-    return choice
-
 def encounter_monster(horde=False):
     mob_name = random.choice(list(all_mobs.keys()))
     mob_info = all_mobs[mob_name]
@@ -293,7 +283,7 @@ def fight_monster(mob_name, mob_health, mob_damage, mob_element):
     
     while mob_health > 0 and player_health > 0:
         print(f"\nFighting {mob_name}:")
-        action = input("Do you want to Attack, Use a Potion, or Use an Ability? (attack/potion/ability): ").lower()
+        action = input("Do you want to Attack or Use a Potion (attack/potion): ").lower()
         
         if action == "attack":
             damage = calculate_damage(stats['damage'] + random.randint(-5, 5), mob_element)
@@ -301,12 +291,8 @@ def fight_monster(mob_name, mob_health, mob_damage, mob_element):
             print(f"You dealt {damage} damage to the {mob_name}.")
         elif action == "potion":
             use_potions()
-            continue
-        elif action == "ability":
-            ability = class_ability()
-            print(f"You used ability {ability}!")
         else:
-            print("Invalid action. Please choose 'attack', 'potion', or 'ability'.")
+            print("Invalid action. Please choose 'attack' and 'potion'.")
             continue
         
         if mob_health <= 0:
