@@ -112,7 +112,7 @@ subclasses = {
         "Lightbringer", "Heavenly Sentinel", "Beacon Knight", "Daylight Warrior", "Seraphic Paladin", "Aether Knight",
         "Luminescent Warrior", "Solar Protector", "Celestial Vanguard", "Skyward Sentinel", "Light's Champion", "Brilliant Guardian",
         "Dawnbreaker", "Sunshine Warrior", "Radiant Sentry", "Blazing Knight", "Gleaming Guardian", "Luminous Knight",
-        "Light's Defender", "Golden Paladin", "Heaven's Blade", "Illuminator", "Star Guardian", "Sky Sentinel"
+        "Light's Defender", "Golden Paladin", "Heaven's Blade", "Illuminator", "Star Guardian", "Sky Sentinel",
     ],
     "Archer": [
         "Sun Archer", "Luminous Marksman", "Celestial Sniper", "Radiant Ranger", "Golden Bowman", "Aurora Scout",
@@ -283,7 +283,7 @@ def fight_monster(mob_name, mob_health, mob_damage, mob_element):
     
     while mob_health > 0 and player_health > 0:
         print(f"\nFighting {mob_name}:")
-        action = input("Do you want to Attack or Use a Potion (attack/potion): ").lower()
+        action = input("Do you want to Attack or Use a Potion (attack/potion/stats): ").lower()
         
         if action == "attack":
             damage = calculate_damage(stats['damage'] + random.randint(-5, 5), mob_element)
@@ -291,6 +291,18 @@ def fight_monster(mob_name, mob_health, mob_damage, mob_element):
             print(f"You dealt {damage} damage to the {mob_name}.")
         elif action == "potion":
             use_potions()
+        elif action == "stats":
+            print(f"\nPlayer Stats:")
+            # print(f"Username: {username}")
+            print(f"Class: {player_class}")
+            print(f"Subclass: {player_subclass}")
+            print(f"Level: {stats['level']}")
+            print(f"Health: {stats['health']}")
+            print(f"Mana: {stats['mana']}")
+            print(f"Damage: {stats['damage']}")
+            print(f"Element: {stats['element']}")
+            print(f"Coins: {coins}")
+            print(f"Inventory: {inventory}")
         else:
             print("Invalid action. Please choose 'attack' and 'potion'.")
             continue
@@ -361,7 +373,7 @@ def choose_area():
         print("Invalid input. Please enter a valid number.")
         choose_area()
     return current_area
-
+#The mcdonalds War
 def explore_village():
     print("\nYou have entered the village.")
     while True:
@@ -657,7 +669,7 @@ def main_game_loop():
             shop()
         elif choice == "3":
             print(f"\nPlayer Stats:")
-            print(f"Username: {username}")
+            # print(f"Username: {username}")
             print(f"Class: {player_class}")
             print(f"Subclass: {player_subclass}")
             print(f"Level: {stats['level']}")
