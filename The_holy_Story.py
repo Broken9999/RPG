@@ -86,15 +86,16 @@ antagonists = [
     }
 ]
 
-# Initial islands with villages and temples
 islands = [
+    {"name": "Forest", "description": "A land filled with magical creatures and mysterious temples.", "level_requirement": 1, "has_village": True, "has_temple": True},
     {"name": "Mystic Island", "description": "A land filled with magical creatures and mysterious temples.", "level_requirement": 1, "has_village": True, "has_temple": True},
     {"name": "Frost Island", "description": "An icy landscape inhabited by frost giants, with an ancient temple.", "level_requirement": 5, "has_village": True, "has_temple": True},
     {"name": "Volcano Island", "description": "A fiery terrain with lava pits and a temple of the Fire God.", "level_requirement": 10, "has_village": False, "has_temple": True},
-    {"name": "Shadow Island", "description": "A dark and eerie place, rumored to be the lair of Lord Nox.", "level_requirement": 15, "has_village": False, "has_temple": False}
+    {"name": "Shadow Island", "description": "A dark and eerie place, rumored to be the lair of Lord Nox.", "level_requirement": 15, "has_village": False, "has_temple": False},
+    {"name": "Dungen", "description": "A hole in a cave with monsters all over it that rose to the top.", "level_requirement": 20, "has_village": True, "has_temple": True}
 ]
 
-for i in range(4, 103):
+for i in range(6, 103):
     islands.append({
         "name": f"Island {i}",
         "description": f"A mysterious island filled with adventures and dangers. Explore at your own risk.",
@@ -111,7 +112,7 @@ subclasses = {
         "Lightbringer", "Heavenly Sentinel", "Beacon Knight", "Daylight Warrior", "Seraphic Paladin", "Aether Knight",
         "Luminescent Warrior", "Solar Protector", "Celestial Vanguard", "Skyward Sentinel", "Light's Champion", "Brilliant Guardian",
         "Dawnbreaker", "Sunshine Warrior", "Radiant Sentry", "Blazing Knight", "Gleaming Guardian", "Luminous Knight",
-        "Light's Defender", "Golden Paladin", "Heaven's Blade", "Illuminator", "Star Guardian", "Sky Sentinel"
+        "Light's Defender", "Golden Paladin", "Heaven's Blade", "Illuminator", "Star Guardian", "Sky Sentinel",
     ],
     "Archer": [
         "Sun Archer", "Luminous Marksman", "Celestial Sniper", "Radiant Ranger", "Golden Bowman", "Aurora Scout",
@@ -182,8 +183,7 @@ armor_shop = {"Leather Armor": 50, "Iron Armor": 80, "Steel Armor": 100}
 player_class = None
 player_subclass = None
 items = []
-coins = 100
-#dic_coins={"coins":100}
+coins = 230
 current_area = "Village"
 stats = {"level": 1, "xp": 0, "health": 100, "mana": 50, "damage": 10, "element": random.choice(elements)}
 inventory = {"weapons": [], "potions": [], "others": []}
@@ -219,6 +219,8 @@ def login():
     username = input("Enter your username: ")
     password = input("Enter your password: ")
 
+
+
 def level_up():
     global stats
     stats['level'] += 1
@@ -244,16 +246,6 @@ def choose_class():
         print("Invalid choice. Defaulting to Warrior.")
         player_class = "Warrior"
     print(f"You are now a {player_class}!")
-
-def class_ability():
-    if player_class == "Warrior":
-        print("1. Shield Bash\n2. Power Strike\n3. Battle Cry")
-    elif player_class == "Archer":
-        print("1. Arrow Rain\n2. Eagle Eye\n3. Snare Trap")
-    elif player_class == "Mage":
-        print("1. Fireball\n2. Ice Shield\n3. Lightning Bolt")
-    choice = input("Choose an ability: ")
-    return choice
 
 def encounter_monster(horde=False):
     mob_name = random.choice(list(all_mobs.keys()))
@@ -291,7 +283,7 @@ def fight_monster(mob_name, mob_health, mob_damage, mob_element):
     
     while mob_health > 0 and player_health > 0:
         print(f"\nFighting {mob_name}:")
-        action = input("Do you want to Attack, Use a Potion, or Use an Ability? (attack/potion/ability): ").lower()
+        action = input("Do you want to Attack or Use a Potion (attack/potion/stats): ").lower()
         
         if action == "attack":
             damage = calculate_damage(stats['damage'] + random.randint(-5, 5), mob_element)
@@ -299,12 +291,20 @@ def fight_monster(mob_name, mob_health, mob_damage, mob_element):
             print(f"You dealt {damage} damage to the {mob_name}.")
         elif action == "potion":
             use_potions()
-            continue
-        elif action == "ability":
-            ability = class_ability()
-            print(f"You used ability {ability}!")
+        elif action == "stats":
+            print(f"\nPlayer Stats:")
+            # print(f"Username: {username}")
+            print(f"Class: {player_class}")
+            print(f"Subclass: {player_subclass}")
+            print(f"Level: {stats['level']}")
+            print(f"Health: {stats['health']}")
+            print(f"Mana: {stats['mana']}")
+            print(f"Damage: {stats['damage']}")
+            print(f"Element: {stats['element']}")
+            print(f"Coins: {coins}")
+            print(f"Inventory: {inventory}")
         else:
-            print("Invalid action. Please choose 'attack', 'potion', or 'ability'.")
+            print("Invalid action. Please choose 'attack' and 'potion'.")
             continue
         
         if mob_health <= 0:
@@ -351,9 +351,14 @@ def use_potions():
 def choose_area():
     global current_area
     print("\nWhere do you want to go?")
+    
+    
+    
     for i, island in enumerate(islands, 1):
         if stats['level'] >= island["level_requirement"]:
-            print(f"{i}. {island['name']} - {island['description']}")
+            print(f"Your new island is {i}. {island['name']} - {island['description']}")
+    for j in island:
+        print(j)
     area_choice = input("Enter the number of your choice: ")
     
     try:
@@ -368,7 +373,7 @@ def choose_area():
         print("Invalid input. Please enter a valid number.")
         choose_area()
     return current_area
-
+#The mcdonalds War
 def explore_village():
     print("\nYou have entered the village.")
     while True:
@@ -400,6 +405,21 @@ def explore_village():
 
 def explore_forest():
     print("\nYou have entered the forest.")
+    while True:
+        encounter_monster(horde=random.choice([True, False]))
+        action = input("Do you want to continue exploring or return to the village? (continue/return): ").lower()
+        if action == "return":
+            print("Returning to the village.")
+            break
+        elif action == "continue":
+            if random.choice([True, False]):
+                print("A horde of monsters appears!")
+                encounter_monster(horde=True)
+        else:
+            print("Invalid choice. Please choose 'continue' or 'return'.")
+
+def explore_islands():
+    print("\nYou have entered a island.")
     while True:
         encounter_monster(horde=random.choice([True, False]))
         action = input("Do you want to continue exploring or return to the village? (continue/return): ").lower()
@@ -477,7 +497,7 @@ def shop():
                 inventory["others"].append(armor_choice)
                 print(f"You bought {armor_choice}.")
             else:
-                print("Not enough coins.")
+                print("Not enough coins.")  
     elif choice == "4":
         sell_items()
     elif choice == "5":
@@ -500,7 +520,7 @@ def sell_items():
         item_choice = int(input("Enter the number of the weapon you want to sell: ")) - 1
         if 0 <= item_choice < len(inventory["weapons"]):
             item_name = inventory["weapons"].pop(item_choice)
-            item_value = random.randint(10, 50)  # Value of weapon
+            item_value = random.randint(10, 50)
             coins += item_value
             print(f"You sold {item_name} for {item_value} coins.")
         else:
@@ -512,7 +532,7 @@ def sell_items():
         item_choice = int(input("Enter the number of the potion you want to sell: ")) - 1
         if 0 <= item_choice < len(inventory["potions"]):
             item_name = inventory["potions"].pop(item_choice)
-            item_value = potions[item_name] // 2  # Sell for half the purchase price
+            item_value = potions[item_name] // 2
             coins += item_value
             print(f"You sold {item_name} for {item_value} coins.")
         else:
@@ -604,7 +624,7 @@ def hidden_quest():
         "Retrieve the lost artifact from the abandoned temple.",
         "Defeat the rogue wizard terrorizing the nearby village.",
         "Rescue the captured merchant from the bandit camp.",
-        "Find the rare herb needed to cure the plague."
+        "Find the rare herb needed to cure the plague.",
     ]
     selected_quest = random.choice(quests)
     print(f"Quest: {selected_quest}")
@@ -643,11 +663,13 @@ def main_game_loop():
                 explore_forest()
             elif current_area == "Village":
                 explore_village()
+            else:
+                explore_islands()
         elif choice == "2":
             shop()
         elif choice == "3":
             print(f"\nPlayer Stats:")
-            print(f"Username: {username}")
+            # print(f"Username: {username}")
             print(f"Class: {player_class}")
             print(f"Subclass: {player_subclass}")
             print(f"Level: {stats['level']}")

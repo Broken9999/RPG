@@ -1,0 +1,34 @@
+# def buy_weapons(self):
+#     print("\nWeapons for sale:")
+#     for weapon, price in self.weapon_shop.items():
+#         print(f"{weapon}: {price} coins")
+#     weapon_choice = input("Enter the name of the weapon you want to buy: ").strip().lower()
+#     if weapon_choice.capitalize() in self.weapon_shop:
+#         weapon_price = self.weapon_shop[weapon_choice.capitalize()]
+#         if self.player.coins >= weapon_price:
+#             self.player.coins -= weapon_price
+#             weapon = Item(weapon_choice.capitalize(), "weapon")
+#             self.player.inventory["weapons"].append(weapon)
+#             print(f"You bought a {weapon.name}.")
+#         else:
+#             print("Not enough coins.")
+#     else:
+#         print("Invalid weapon choice.")
+
+# def buy_potions(self):
+#     print("\nPotions for sale:")
+#     for potion, price in self.potions.items():
+#         print(f"{potion}: {price} coins")
+#     potion_choice = input("Enter the name of the potion you want to buy: ").strip().lower()
+#     if potion_choice.capitalize() in self.potions:
+#         potion_price = self.potions[potion_choice.capitalize()]
+        
+#         if self.player.coins >= potion_price:
+#             self.player.coins -= potion_price
+#             potion = Item(potion_choice.capitalize(), "potion")
+#             self.player.inventory["potions"].append(potion)
+#             print(f"You bought a {potion.name}.")
+#         else:
+#             print("Not enough coins.")
+#     else:
+#         print("Invalid potion choice.")
