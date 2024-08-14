@@ -1,5 +1,4 @@
 import random
-import json
 import sys
 
 all_weapons = {
@@ -474,7 +473,7 @@ class Game:
         self.all_mobs = self.load_mobs()
         self.islands = self.load_islands()
         self.potions = {"Health Potion": 20, "Mana Potion": 25}
-        self.weapon_shop = {"Sword": 100, "Bow": 120, "Staff": 150}
+        self.weapon_shop = {"Sword": 100, "Bow": 100, "Staff": 100}
         self.armor_shop = {"Leather Armor": 50, "Iron Armor": 80, "Steel Armor": 100}
 
     def load_mobs(self):
@@ -700,11 +699,12 @@ class Game:
         for potion, price in self.potions.items():
             print(f"{potion}: {price} coins")
         potion_choice = input("Enter the name of the potion you want to buy: ").strip().lower()
-        if potion_choice.capitalize() in self.potions:
-            potion_price = self.potions[potion_choice.capitalize()]
+        if potion_choice.title() in self.potions:
+            potion_price =  self.potions.get(potion_choice.title())# self.potions[potion_choice.title()]
+            print(potion_choice.title())
             if self.player.coins >= potion_price:
                 self.player.coins -= potion_price
-                potion = Item(potion_choice.capitalize(), "potion")
+                potion = Item(potion_choice.title(), "potion")
                 self.player.inventory["potions"].append(potion)
                 print(f"You bought a {potion.name}.")
             else:
@@ -717,11 +717,12 @@ class Game:
         for weapon, price in self.weapon_shop.items():
             print(f"{weapon}: {price} coins")
         weapon_choice = input("Enter the name of the weapon you want to buy: ").strip().lower()
-        if weapon_choice.capitalize() in self.weapon_shop:
-            weapon_price = self.weapon_shop[weapon_choice.capitalize()]
+        weapon_choice_title = weapon_choice.title()
+        if weapon_choice_title in self.weapon_shop:
+            weapon_price = self.weapon_shop[weapon_choice_title]
             if self.player.coins >= weapon_price:
                 self.player.coins -= weapon_price
-                weapon = Item(weapon_choice.capitalize(), "weapon", damage_bonus=10)
+                weapon = Item(weapon_choice_title, "weapon", damage_bonus=10)
                 self.player.inventory["weapons"].append(weapon)
                 print(f"You bought a {weapon.name}.")
             else:
@@ -729,16 +730,17 @@ class Game:
         else:
             print("Invalid weapon choice.")
 
+
     def buy_armor(self):
         print("\nArmor for sale:")
         for armor, price in self.armor_shop.items():
             print(f"{armor}: {price} coins")
         armor_choice = input("Enter the name of the armor you want to buy: ").strip().lower()
-        if armor_choice.capitalize() in self.armor_shop:
-            armor_price = self.armor_shop[armor_choice.capitalize()]
+        if armor_choice.title() in self.armor_shop:
+            armor_price = self.armor_shop[armor_choice.title()]
             if self.player.coins >= armor_price:
                 self.player.coins -= armor_price
-                armor = Item(armor_choice.capitalize(), "armor", health_bonus=20)
+                armor = Item(armor_choice.title(), "armor", health_bonus=20)
                 self.player.inventory["others"].append(armor)
                 print(f"You bought {armor.name}.")
             else:
@@ -763,7 +765,7 @@ class Game:
             print("Invalid choice. Please try again.")
 
     def sell_category(self, category):
-        print(f"\nYour {category.capitalize()}:")
+        print(f"\nYour {category.title()}:")
         items = self.player.inventory[category]
         for i, item in enumerate(items, 1):
             print(f"{i}. {item.name} (Durability: {item.durability})")
@@ -843,3 +845,5 @@ def main_game_loop():
 
 if __name__ == "__main__":
     main_game_loop()
+
+
